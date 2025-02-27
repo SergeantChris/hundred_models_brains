@@ -1,0 +1,35 @@
+- name: 'mvitv2_small_in1k'
+  type: 'image-in1k'
+  params: 34.9
+  set: # leave None
+  netset_fallback: 'Timm'
+  cfg:
+    _target_: repralign.models.loading.timm_loader
+    model_name: 'mvitv2_small.fb_in1k'
+  layers: ['stages.0', 'stages.1', 'stages.2.blocks.1', 'stages.2.blocks.3', 'stages.2.blocks.5', 'stages.2.blocks.7',
+           'stages.2.blocks.9', 'stages.3', 'head']
+  rsa_skips: ['head']
+
+- name: 'mvitv2_base_in1k'
+  type: 'image-in1k'
+  params: 51.5
+  set: # leave None
+  netset_fallback: 'Timm'
+  cfg:
+    _target_: repralign.models.loading.timm_loader
+    model_name: 'mvitv2_base.fb_in1k'
+  layers: ['stages.0', 'stages.1', 'stages.2.blocks.1', 'stages.2.blocks.3', 'stages.2.blocks.5', 'stages.2.blocks.7',
+           'stages.2.blocks.9', 'stages.2.blocks.11', 'stages.2.blocks.13', 'stages.2.blocks.15', 'stages.3', 'head']
+  rsa_skips: ['head']
+
+#### DINO ####
+- name: 'vit_base_patch16_224_dino'
+  type: 'image-dino'
+  params: 85.8
+  set: # leave None
+  netset_fallback: 'Timm'
+  cfg:
+    _target_: repralign.models.loading.timm_loader
+    model_name: 'vit_base_patch16_224.dino'
+  rsa_skips: [ 'fc_norm', 'head_drop', 'head', 'norm', 'norm_pre', 'patch_drop', 'patch_embed_norm',
+               'patch_embed_proj', 'pos_drop' ]

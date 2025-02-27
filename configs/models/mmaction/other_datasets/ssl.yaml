@@ -1,0 +1,27 @@
+- name: 'videomae_B_pretrainONLY'
+  type: 'video-k400'
+  archtype: 'Transformers'
+  params: 87
+  flops: 180
+  accuracy: 81.3
+  time_as: "input_dim_and_supervision_signal"
+  pre: 'prevideo'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'backbone'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 16
+    frame_interval: 4
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/videomae/vit-base-p16_videomae-k400-pre_16x4x1_kinetics-400.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/videomae/checkpoint.pth
+  rsa_skips: ['backbone_patch_embed_projection', 'backbone_norm', 'backbone_fc_norm', 'backbone_pos_drop']

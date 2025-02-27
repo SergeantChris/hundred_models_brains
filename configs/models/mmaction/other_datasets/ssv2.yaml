@@ -1,0 +1,109 @@
+- name: 'MViT_v2_S_ssv2'
+  type: 'video-ssv2'
+  params: 34.5
+  flops: 64
+  accuracy: 68.1
+  time_as: "input_dim_global"
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 16
+    frame_interval: 6
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/mvit/mvit-small-p244_k400-pre_16xb16-u16-100e_sthv2-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/mvit/mvit-small-p244_u16_sthv2-rgb_20221021-65ecae7d.pth
+  rsa_skips: ['backbone_patch_embed_projection', 'backbone_norm3', 'cls_head_fc_cls', 'cls_head_dropout']
+
+- name: 'MViT_v2_B_ssv2'
+  type: 'video-ssv2'
+  params: 51.2
+  flops: 225
+  accuracy: 70.8
+  time_as: "input_dim_global"
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 32
+    frame_interval: 3
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/mvit/mvit-base-p244_u32_sthv2-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/mvit/mvit-base-p244_u32_sthv2-rgb_20221021-d5de5da6.pth
+  rsa_skips: ['backbone_patch_embed_projection', 'backbone_norm3', 'cls_head_fc_cls', 'cls_head_dropout']
+
+- name: 'tsm_r50_ssv2'
+  type: 'video-ssv2'
+  params: 23.87
+  flops: 32.88
+  accuracy: 62.72
+  time_as: "input_dim_local"
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 1
+    frame_interval: 1
+    resize_size: 256
+    crop_type: 'center_crop'
+    crop_size: 256
+    format_shape: 'NCHW'
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/tsm/tsm_imagenet-pretrained-r50_8xb16-1x1x8-50e_sthv2-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/tsm/tsm_imagenet-pretrained-r50_8xb16-1x1x8-50e_sthv2-rgb_20230317-be0fc26e.pth
+  rsa_skips: ['backbone_maxpool', 'cls_head_avg_pool', 'cls_head_consensus', 'cls_head_dropout', 'cls_head_fc_cls']
+
+- name: 'TSN_r50_8_ssv2'
+  type: 'image-ssv2'
+  params: 24.33
+  flops: 102.7
+  accuracy: 35.5
+  time_as: 'score_avg'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 1
+    frame_interval: 1
+    resize_size: 256
+    crop_type: 'center_crop'
+    crop_size: 224
+    format_shape: 'NCHW'
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/tsn/tsn_imagenet-pretrained-r50_8xb32-1x1x8-50e_sthv2-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/tsn/tsn_imagenet-pretrained-r50_8xb32-1x1x8-50e_sthv2-rgb_20230313-06ad7d03.pth
+  rsa_skips: ['backbone_maxpool', 'cls_head_avg_pool', 'cls_head_consensus', 'cls_head_dropout', 'cls_head_fc_cls']
+
+- name: 'trn'
+
+- name: 'tin'

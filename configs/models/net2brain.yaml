@@ -1,0 +1,306 @@
+- name: 'AlexNet'
+  type: 'image-in1k'
+  params: 61
+  set: 'Standard'
+  rsa_skips: ['classifier_0', 'classifier_1', 'classifier_2', 'classifier_3', 'classifier_4', 'classifier_5',
+              'classifier_6', 'avgpool']
+
+- name: 'Densenet161'
+  type: 'image-in1k'
+  params: 28
+  set: 'Standard'
+  rsa_skips: ['classifier', 'features_norm0', 'features_norm5', 'features_pool0', 'features_relu0']
+
+- name: 'Densenet201'
+  type: 'image-in1k'
+  params: 20
+  set: 'Standard'
+  rsa_skips: ['classifier', 'features_norm0', 'features_norm5', 'features_pool0', 'features_relu0']
+
+- name: 'efficientnet_b3'
+  type: 'image-in1k'
+  params: 12
+  set: 'Standard'
+  rsa_skips: ['avgpool', 'classifier_0', 'classifier_1']
+
+- name: 'efficientnet_b6'
+  type: 'image-in1k'
+  params: 43
+  set: 'Standard'
+  rsa_skips: ['avgpool', 'classifier_0', 'classifier_1']
+
+- name: 'regnet_x_16gf'
+  type: 'image-in1k'
+  params: 54
+  set: 'Standard'
+  rsa_skips: ['avgpool', 'fc']
+
+- name: 'regnet_y_8gf'
+  type: 'image-in1k'
+  params: 39
+  set: 'Standard'
+  rsa_skips: ['avgpool', 'fc']
+
+- name: 'ResNet34'
+  type: 'image-in1k'
+  params: 21
+  set: 'Standard'
+  rsa_skips: ['bn1', 'relu', 'maxpool', 'avgpool', 'fc' ]
+
+- name: 'ResNet50'
+  type: 'image-in1k'
+  params: 25
+  set: 'Standard'
+  rsa_skips: ['bn1', 'relu', 'maxpool', 'avgpool', 'fc' ]
+
+- name: 'ResNet101'
+  type: 'image-in1k'
+  params: 44
+  set: 'Standard'
+  rsa_skips: ['bn1', 'relu', 'maxpool', 'avgpool', 'fc' ]
+
+- name: 'ResNet152'
+  type: 'image-in1k'
+  params: 60
+  set: 'Standard'
+  rsa_skips: ['bn1', 'relu', 'maxpool', 'avgpool', 'fc' ]
+
+- name: 'resnext50_32x4d'
+  type: 'image-in1k'
+  params: 25
+  set: 'Standard'
+  rsa_skips: [ 'bn1', 'relu', 'maxpool', 'avgpool', 'fc' ]
+
+- name: 'resnext101_32x8d'
+  type: 'image-in1k'
+  params: 88
+  set: 'Standard'
+  rsa_skips: [ 'bn1', 'relu', 'maxpool', 'avgpool', 'fc' ]
+
+- name: 'VGG11'
+  type: 'image-in1k'
+  params: 132
+  set: 'Standard'
+  rsa_skips: ['classifier_0', 'classifier_1', 'classifier_2', 'classifier_3', 'classifier_4', 'classifier_5',
+              'classifier_6', 'avgpool',
+              'features_1', 'features_2', 'features_3', 'features_4', 'features_5',
+              'features_7', 'features_8', 'features_9', 'features_10', 'features_12', 'features_13', 'features_14',
+              'features_15', 'features_17', 'features_19', 'features_20']
+
+- name: 'VGG11_bn'
+  type: 'image-in1k'
+  params: 132
+  set: 'Standard'
+  rsa_skips: ['classifier_0', 'classifier_1', 'classifier_2', 'classifier_3', 'classifier_4', 'classifier_5',
+              'classifier_6', 'avgpool',
+              'features_1', 'features_2', 'features_3', 'features_4', 'features_5', 'features_6',
+              'features_7', 'features_9', 'features_10', 'features_11', 'features_12', 'features_13',
+              'features_14', 'features_16', 'features_17', 'features_18', 'features_19', 'features_20', 'features_21',
+              'features_23', 'features_24', 'features_26', 'features_27', 'features_28']
+
+- name: 'VGG19'
+  type: 'image-in1k'
+  params: 143
+  set: 'Standard'
+  rsa_skips: [ 'classifier_0', 'classifier_1', 'classifier_2', 'classifier_3', 'classifier_4', 'classifier_5',
+               'classifier_6', 'avgpool',
+               'features_1', 'features_2', 'features_3', 'features_4', 'features_6', 'features_7',
+               'features_8', 'features_9', 'features_11', 'features_12', 'features_13',
+               'features_14', 'features_15', 'features_16', 'features_17', 'features_18',
+               'features_20', 'features_21', 'features_22', 'features_23', 'features_24', 'features_25',
+               'features_26', 'features_27', 'features_29', 'features_30', 'features_31',
+               'features_32', 'features_33', 'features_35', 'features_36']
+
+- name: 'VGG19_bn'
+  type: 'image-in1k'
+  params: 143
+  set: 'Standard'
+  rsa_skips: [ 'classifier_0', 'classifier_1', 'classifier_2', 'classifier_3', 'classifier_4', 'classifier_5',
+               'classifier_6', 'avgpool',
+               'features_1', 'features_2', 'features_3', 'features_4', 'features_5', 'features_6',
+               'features_8', 'features_9', 'features_10', 'features_11', 'features_12',
+               'features_13', 'features_15', 'features_16', 'features_17', 'features_18',
+               'features_19', 'features_21', 'features_22', 'features_23', 'features_24', 'features_25',
+               'features_26', 'features_28', 'features_29', 'features_30', 'features_31',
+               'features_32', 'features_34', 'features_35', 'features_36', 'features_37', 'features_38',
+               'features_39', 'features_41', 'features_42', 'features_43', 'features_44', 'features_45',
+               'features_47', 'features_48', 'features_50', 'features_51', 'features_52']
+
+- name: 'wide_resnet50_2'
+  type: 'image-in1k'
+  params: 68
+  set: 'Standard'
+  rsa_skips: [ 'bn1', 'relu', 'maxpool', 'avgpool', 'fc' ]
+
+- name: 'wide_resnet101_2'
+  type: 'image-in1k'
+  params: 126
+  set: 'Standard'
+  rsa_skips: [ 'bn1', 'relu', 'maxpool', 'avgpool', 'fc' ]
+
+- name: 'inception_v3' # no rsa_skips
+  type: 'image-in1k'
+  params: 23
+  set: 'Timm'
+
+- name: 'inception_v4' # no rsa_skips
+  type: 'image-in1k'
+  params: 42
+  set: 'Timm'
+
+- name: 'repvgg_a2' # no rsa_skips
+  type: 'image-in1k'
+  params: 28
+  set: 'Timm'
+
+- name: 'repvgg_b2' # no rsa_skips
+  type: 'image-in1k'
+  params: 89
+  set: 'Timm'
+
+- name: 'seresnet50'
+  type: 'image-in1k'
+  params: 28
+  set: 'Timm'
+  rsa_skips: ['maxpool', 'bn1', 'act1']
+
+- name: 'seresnext50_32x4d'
+  type: 'image-in1k'
+  params: 27
+  set: 'Timm'
+  rsa_skips: ['maxpool', 'bn1', 'act1']
+
+- name: 'xception41' # no rsa_skips
+  type: 'image-in1k'
+  params: 27
+  set: 'Timm'
+
+- name: 'xception71' # no rsa_skips
+  type: 'image-in1k'
+  params: 42
+  set: 'Timm'
+
+- name: 'cait_s24_224'
+  type: 'image-in1k'
+  params: 46
+  set: 'Timm'
+  rsa_skips: ['patch_embed_norm', 'patch_embed_proj', 'pos_drop', 'norm', 'head']
+
+- name: 'cait_xxs24_224'
+  type: 'image-in1k'
+  params: 12
+  set: 'Timm'
+  rsa_skips: ['patch_embed_norm', 'patch_embed_proj', 'pos_drop', 'norm', 'head']
+
+- name: 'convit_small'
+  type: 'image-in1k'
+  params: 27
+  set: 'Timm'
+  rsa_skips: ['patch_embed_norm', 'patch_embed_proj', 'pos_drop', 'norm', 'head']
+
+- name: 'convit_base'
+  type: 'image-in1k'
+  params: 86
+  set: 'Timm'
+  rsa_skips: ['patch_embed_norm', 'patch_embed_proj', 'pos_drop', 'norm', 'head']
+
+- name: 'deit_small_patch16_224'
+  type: 'image-in1k'
+  params: 22
+  set: 'Timm'
+  rsa_skips: ['patch_embed_norm', 'patch_embed_proj', 'pos_drop', 'norm', 'pre_logits', 'head']
+
+- name: 'deit_base_patch16_224'
+  type: 'image-in1k'
+  params: 86
+  set: 'Timm'
+  rsa_skips: ['patch_embed_norm', 'patch_embed_proj', 'pos_drop', 'norm', 'pre_logits', 'head']
+
+- name: 'swin_tiny_patch4_window7_224'
+  type: 'image-in1k'
+  params: 28
+  set: 'Timm'
+  layers: ['layers.0', 'layers.1', 'layers.2.blocks.1', 'layers.2.blocks.3', 'layers.2.blocks.5', 'layers.2.blocks.7',
+           'layers.2.blocks.9', 'layers.2.blocks.11', 'layers.2.blocks.13', 'layers.2.blocks.15',
+           'layers.2.blocks.17', 'layers.3', 'head']
+  rsa_skips: ['head']
+
+- name: 'swin_small_patch4_window7_224'
+  type: 'image-in1k'
+  params: 49
+  set: 'Timm'
+  layers: ['layers.0', 'layers.1', 'layers.2.blocks.1', 'layers.2.blocks.3', 'layers.2.blocks.5', 'layers.2.blocks.7',
+           'layers.2.blocks.9', 'layers.2.blocks.11', 'layers.2.blocks.13', 'layers.2.blocks.15',
+           'layers.2.blocks.17', 'layers.3', 'head']
+  rsa_skips: ['head']
+
+- name: 'swin_base_patch4_window7_224'
+  type: 'image-in1k'
+  params: 87
+  set: 'Timm'
+  layers: ['layers.0', 'layers.1', 'layers.2.blocks.1', 'layers.2.blocks.3', 'layers.2.blocks.5', 'layers.2.blocks.7',
+           'layers.2.blocks.9', 'layers.2.blocks.11', 'layers.2.blocks.13', 'layers.2.blocks.15',
+           'layers.2.blocks.17', 'layers.3', 'head']
+  rsa_skips: ['head']
+
+#- name: 'twins_svt_base'
+#  type: 'image-in1k'
+#  params: 56
+#  set: 'Timm'
+#  layers: ['blocks.0.1', 'blocks.1.1', 'blocks.2.1', 'blocks.2.3', 'blocks.2.5', 'blocks.2.7', 'blocks.2.9',
+#           'blocks.2.11', 'blocks.2.13', 'blocks.2.15', 'blocks.2.17', 'blocks.3.1', 'head']
+#  rsa_skips: ['head']
+
+- name: 'twins_pcpvt_base'
+  type: 'image-in1k'
+  params: 43
+  set: 'Timm'
+  layers: ['blocks.0.1', 'blocks.1.1', 'blocks.2.1', 'blocks.2.3', 'blocks.2.5', 'blocks.2.7', 'blocks.2.9',
+           'blocks.2.11', 'blocks.2.13', 'blocks.2.15', 'blocks.2.17', 'blocks.3.1', 'head']
+  rsa_skips: ['head']
+
+- name: 'vit_small_patch16_224'
+  type: 'image-in1k'
+  params: 22
+  set: 'Timm'
+  rsa_skips: ['patch_embed_norm', 'patch_embed_proj', 'pos_drop', 'norm', 'pre_logits', 'head']
+
+- name: 'vit_base_patch16_224'
+  type: 'image-in1k'
+  params: 86
+  set: 'Timm'
+  rsa_skips: ['patch_embed_norm', 'patch_embed_proj', 'pos_drop', 'norm', 'pre_logits', 'head']
+
+#- name: 'visformer_small'
+#  type: 'image-in1k'
+#  params: 40
+#  set: 'Timm'
+#  layers: ['stem', 'stage1.2', 'stage1.6', 'stage2.3', 'stage3.3', 'head']
+#  rsa_skips: ['head']
+
+#### CLIP ####
+- name: 'ViT-B/16'
+  type: 'image-clip'
+  params: 86
+  set: 'Clip'
+  rsa_skips: ['ln_final', 'token_embedding', 'visual_ln_post', 'visual_ln_pre',
+              'transformer_resblocks_0', 'transformer_resblocks_1', 'transformer_resblocks_2', 'transformer_resblocks_3',
+              'transformer_resblocks_4', 'transformer_resblocks_5', 'transformer_resblocks_6', 'transformer_resblocks_7',
+              'transformer_resblocks_8', 'transformer_resblocks_9', 'transformer_resblocks_10', 'transformer_resblocks_11']
+
+#### segmentation ####
+- name: 'fcn_resnet50'
+  type: 'image-coco'
+  params: 35
+  set: 'Pytorch'
+  rsa_skips: ['classifier_0', 'classifier_1', 'classifier_2', 'classifier_3', 'classifier_4',
+              'aux_classifier_0', 'aux_classifier_1', 'aux_classifier_2', 'aux_classifier_3', 'aux_classifier_4',
+              'backbone_bn1', 'backbone_relu', 'backbone_maxpool']
+
+- name: 'deeplabv3_resnet50'
+  type: 'image-coco'
+  params: 42
+  set: 'Pytorch'
+  rsa_skips: ['classifier_0', 'classifier_1', 'classifier_2', 'classifier_3', 'classifier_4',
+              'aux_classifier_0', 'aux_classifier_1', 'aux_classifier_2', 'aux_classifier_3', 'aux_classifier_4',
+              'backbone_bn1', 'backbone_relu', 'backbone_maxpool']

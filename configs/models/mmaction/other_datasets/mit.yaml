@@ -1,0 +1,27 @@
+- name: 'uniformer_v2_B_16_CLIP_k710_k400_MiTv1'
+  type: 'video-mit'
+  params: 115
+  flops: 100
+  accuracy: 42.3
+  time_as: "input_dim_localglobal"
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 8
+    frame_interval: 12
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/uniformerv2/uniformerv2-base-p16-res224_clip-kinetics710-kinetics-k400-pre_16xb32-u8_mitv1-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/uniformerv2/uniformerv2-base-p16-res224_clip-kinetics710-kinetics-k400-pre_16xb32-u8_mitv1-rgb_20230313-a6f4a567.pth
+  rsa_skips: ['backbone_transformer_dec_0', 'backbone_transformer_dec_1', 'backbone_transformer_dec_2', 'backbone_transformer_dec_3',
+              'backbone_transformer_dpe_0', 'backbone_transformer_dpe_1', 'backbone_transformer_dpe_2', 'backbone_transformer_dpe_3',
+              'backbone_transformer_norm', 'backbone_ln_pre', 'cls_head']

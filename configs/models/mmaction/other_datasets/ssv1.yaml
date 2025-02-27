@@ -1,0 +1,30 @@
+- name: 'tanet_r50_ssv1'
+  type: 'video-k400'
+  params: 25.6
+  flops: 43
+  accuracy: 49.71
+  time_as: "input_dim_local"
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 1
+    frame_interval: 1
+    resize_size: 256
+    crop_type: 'center_crop'
+    crop_size: 256
+    format_shape: 'NCHW'
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/tanet/tanet_imagenet-pretrained-r50_8xb8-1x1x8-50e_sthv1-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/tanet/tanet_imagenet-pretrained-r50_8xb8-1x1x8-50e_sthv1-rgb_20220906-de50e4ef.pth
+  rsa_skips: ['backbone_maxpool', 'cls_head_avg_pool', 'cls_head_consensus', 'cls_head_dropout', 'cls_head_fc_cls']
+
+- name: 'trn'
+
+- name: 'tin'

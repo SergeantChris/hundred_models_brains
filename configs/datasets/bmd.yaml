@@ -1,0 +1,14 @@
+_target_: repralign.datasets.BMDReader
+location: ???
+dataset_path: ${location}/workspace/data/bmd
+dataset_version: versionB/MNI152/merged_hemispheres_streams_pkl
+# options:
+# versionB/MNI152/prepared_allvoxel_pkl
+# versionB/MNI152/merged_hemispheres_streams_pkl
+# versionA/MNI152/prepared_data/prepared_allvoxel_pkl/TRavg56789
+selection: test # train, test, or all; for RSA use test
+average_external: False
+transform:
+  _partial_: True
+  _target_: repralign.utils.common.raw2rdm
+  dim:

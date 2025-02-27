@@ -1,0 +1,393 @@
+- name: 'MViT_v2_S'
+  type: 'video-k400'
+  params: 34.5
+  flops: 64
+  accuracy: 81.1
+  time_as: "input_dim_global"
+  pre: 'nopre'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 16
+    frame_interval: 4
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/mvit/mvit-small-p244_32xb16-16x4x1-200e_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/mvit/mvit-small-p244_16x4x1_kinetics400-rgb_20221021-9ebaaeed.pth
+  rsa_skips: ['backbone_patch_embed_projection', 'backbone_norm3', 'cls_head_fc_cls', 'cls_head_dropout']
+
+- name: 'MViT_v2_B'
+  type: 'video-k400'
+  params: 51.2
+  flops: 225
+  accuracy: 82.6
+  time_as: "input_dim_global"
+  pre: 'nopre'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 32
+    frame_interval: 3
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/mvit/mvit-base-p244_32x3x1_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/mvit/mvit-base-p244_32x3x1_kinetics400-rgb_20221021-f392cd2d.pth
+  rsa_skips: ['backbone_patch_embed_projection', 'backbone_norm3', 'cls_head_fc_cls', 'cls_head_dropout']
+
+- name: 'video_swin_tiny'
+  type: 'video-k400'
+  params: 28.2
+  flops: 88
+  accuracy: 78.9
+  time_as: "input_dim_localglobal"
+  pre: 'preimage'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 32
+    frame_interval: 2
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/swin/swin-tiny-p244-w877_in1k-pre_8xb8-amp-32x2x1-30e_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/swin/swin-tiny-p244-w877_in1k-pre_8xb8-amp-32x2x1-30e_kinetics400-rgb_20220930-241016b2.pth
+  layers: ['backbone.layers.0', 'backbone.layers.1', 'backbone.layers.2.blocks.1', 'backbone.layers.2.blocks.3',
+           'backbone.layers.2.blocks.5', 'backbone.layers.2.blocks.7', 'backbone.layers.2.blocks.9',
+           'backbone.layers.2.blocks.11', 'backbone.layers.2.blocks.13', 'backbone.layers.2.blocks.15',
+           'backbone.layers.2.blocks.17', 'backbone.layers.3', 'cls_head.fc_cls']
+  rsa_skips: ['cls_head_fc_cls']
+
+- name: 'video_swin_small'
+  type: 'video-k400'
+  params: 49.8
+  flops: 166
+  accuracy: 80.54
+  time_as: "input_dim_localglobal"
+  pre: 'preimage'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 32
+    frame_interval: 2
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/swin/swin-small-p244-w877_in1k-pre_8xb8-amp-32x2x1-30e_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/swin/swin-small-p244-w877_in1k-pre_8xb8-amp-32x2x1-30e_kinetics400-rgb_20220930-e91ab986.pth
+  layers: ['backbone.layers.0', 'backbone.layers.1', 'backbone.layers.2.blocks.1', 'backbone.layers.2.blocks.3',
+           'backbone.layers.2.blocks.5', 'backbone.layers.2.blocks.7', 'backbone.layers.2.blocks.9',
+           'backbone.layers.2.blocks.11', 'backbone.layers.2.blocks.13', 'backbone.layers.2.blocks.15',
+           'backbone.layers.2.blocks.17', 'backbone.layers.3', 'cls_head.fc_cls']
+  rsa_skips: ['cls_head_fc_cls']
+
+- name: 'video_swin_base'
+  type: 'video-k400'
+  params: 88
+  flops: 282
+  accuracy: 80.57
+  time_as: "input_dim_localglobal"
+  pre: 'preimage'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 32
+    frame_interval: 2
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/swin/swin-base-p244-w877_in1k-pre_8xb8-amp-32x2x1-30e_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/swin/swin-base-p244-w877_in1k-pre_8xb8-amp-32x2x1-30e_kinetics400-rgb_20220930-182ec6cc.pth
+  layers: ['backbone.layers.0', 'backbone.layers.1', 'backbone.layers.2.blocks.1', 'backbone.layers.2.blocks.3',
+           'backbone.layers.2.blocks.5', 'backbone.layers.2.blocks.7', 'backbone.layers.2.blocks.9',
+           'backbone.layers.2.blocks.11', 'backbone.layers.2.blocks.13', 'backbone.layers.2.blocks.15',
+           'backbone.layers.2.blocks.17', 'backbone.layers.3', 'cls_head.fc_cls']
+  rsa_skips: ['cls_head_fc_cls']
+
+- name: 'timesformer_divST'
+  type: 'video-k400'
+  params: 122
+  flops: 196
+  accuracy: 77.69
+  time_as: "input_dim_factorized"
+  pre: 'preimage'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 8
+    frame_interval: 32
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/timesformer/timesformer_divST_8xb8-8x32x1-15e_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/timesformer/timesformer_divST_8xb8-8x32x1-15e_kinetics400-rgb_20220815-a4d0d01f.pth
+  rsa_skips: ['backbone_patch_embed_projection', 'backbone_drop_after_pos', 'backbone_drop_after_time', 'backbone_norm', 'cls_head_fc_cls']
+
+- name: 'timesformer_jointST'
+  type: 'video-k400'
+  params: 86.11
+  flops: 180
+  accuracy: 76.95
+  time_as: "input_dim_global"
+  pre: 'preimage'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 8
+    frame_interval: 32
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/timesformer/timesformer_jointST_8xb8-8x32x1-15e_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/timesformer/timesformer_jointST_8xb8-8x32x1-15e_kinetics400-rgb_20220815-8022d1c0.pth
+  rsa_skips: ['backbone_patch_embed_projection', 'backbone_drop_after_pos', 'backbone_drop_after_time', 'backbone_norm', 'cls_head_fc_cls']
+
+- name: 'uniformer_S'
+  type: 'video-k400'
+  params: 21.4
+  flops: 41.8
+  accuracy: 80.8
+  time_as: "input_dim_localglobal"
+  pre: 'preimage'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 16
+    frame_interval: 4
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/uniformer/uniformer-small_imagenet1k-pre_16x4x1_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/uniformer/uniformer-small_imagenet1k-pre_16x4x1_kinetics400-rgb_20221219-c630a037.pth
+  layers: ['backbone.blocks1.2', 'backbone.blocks2.3', 'backbone.blocks3.7', 'backbone.blocks4.2', 'cls_head' ]
+  rsa_skips: ['cls_head']
+
+- name: 'uniformer_B'
+  type: 'video-k400'
+  params: 49.8
+  flops: 96.7
+  accuracy: 82.0
+  time_as: "input_dim_localglobal"
+  pre: 'preimage'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 16
+    frame_interval: 4
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/uniformer/uniformer-base_imagenet1k-pre_16x4x1_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/uniformer/uniformer-base_imagenet1k-pre_16x4x1_kinetics400-rgb_20221219-157c2e66.pth
+  layers: ['backbone.blocks1.4', 'backbone.blocks2.7', 'backbone.blocks3.19', 'backbone.blocks4.6', 'cls_head' ]
+  rsa_skips: ['cls_head']
+
+- name: 'uniformer_v2_B_16_CLIP_k400'
+  type: 'video-k400'
+  params: 115
+  flops: 100
+  accuracy: 84.3
+  time_as: "input_dim_localglobal"
+  pre: 'preimage'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 8
+    frame_interval: 12
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/uniformerv2/uniformerv2-base-p16-res224_clip_8xb32-u8_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/uniformerv2/uniformerv2-base-p16-res224_clip_8xb32-u8_kinetics400-rgb_20230313-e29fc968.pth
+  rsa_skips: ['backbone_ln_pre', 'cls_head']
+
+- name: 'uniformer_v2_B_16_CLIP_k710_k400'
+  type: 'video-k400'
+  params: 115
+  flops: 100
+  accuracy: 85.6
+  time_as: "input_dim_localglobal"
+  pre: 'prevideo'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 8
+    frame_interval: 12
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/uniformerv2/uniformerv2-base-p16-res224_clip-kinetics710-pre_8xb32-u8_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/uniformerv2/uniformerv2-base-p16-res224_clip-kinetics710-pre_8xb32-u8_kinetics400-rgb_20230313-75be0806.pth
+  rsa_skips: [ 'backbone_transformer_dec_0', 'backbone_transformer_dec_1', 'backbone_transformer_dec_2', 'backbone_transformer_dec_3',
+               'backbone_transformer_dpe_0', 'backbone_transformer_dpe_1', 'backbone_transformer_dpe_2', 'backbone_transformer_dpe_3',
+               'backbone_transformer_norm', 'backbone_ln_pre', 'cls_head' ]
+
+- name: 'videomae_B'
+  type: 'video-k400'
+  params: 87
+  flops: 180
+  accuracy: 81.3
+  time_as: "input_dim_and_supervision_signal"
+  pre: 'prevideo'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 16
+    frame_interval: 4
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/videomae/vit-base-p16_videomae-k400-pre_16x4x1_kinetics-400.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/videomae/vit-base-p16_videomae-k400-pre_16x4x1_kinetics-400_20221013-860a3cd3.pth
+  rsa_skips: ['backbone_patch_embed_projection', 'backbone_norm', 'backbone_fc_norm', 'backbone_pos_drop', 'cls_head_fc_cls']
+
+- name: 'videomae_v2_S'
+  type: 'video-k400'
+  params: 22
+  flops: 57
+  accuracy: 83.6
+  time_as: "input_dim_and_supervision_signal"
+  pre: 'prevideo'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 16
+    frame_interval: 4
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/videomaev2/vit-small-p16_videomaev2-vit-g-dist-k710-pre_16x4x1_kinetics-400.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/videomaev2/vit-small-p16_videomaev2-vit-g-dist-k710-pre_16x4x1_kinetics-400_20230510-25c748fd.pth
+  rsa_skips: ['backbone_patch_embed_projection', 'backbone_norm', 'backbone_fc_norm', 'backbone_pos_drop', 'cls_head_fc_cls']
+
+- name: 'videomae_v2_B'
+  type: 'video-k400'
+  params: 87
+  flops: 180
+  accuracy: 86.6
+  time_as: "input_dim_and_supervision_signal"
+  pre: 'prevideo'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 16
+    frame_interval: 4
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/videomaev2/vit-base-p16_videomaev2-vit-g-dist-k710-pre_16x4x1_kinetics-400.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/videomaev2/vit-base-p16_videomaev2-vit-g-dist-k710-pre_16x4x1_kinetics-400_20230510-3e7f93b2.pth
+  rsa_skips: ['backbone_patch_embed_projection', 'backbone_norm', 'backbone_fc_norm', 'backbone_pos_drop', 'cls_head_fc_cls']

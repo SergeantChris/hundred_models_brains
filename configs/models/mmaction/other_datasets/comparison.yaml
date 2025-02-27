@@ -1,0 +1,390 @@
+  - name: 'slow_r50_in1k'
+    type: 'Kinetics-400 (1)'
+    archtype: 'CNNs'
+    params: 32.45
+    flops: 54.75
+    accuracy: 76.45
+    time_as: "input_dim_local"
+    pre: 'preimage'
+    set: # leave None
+    netset_fallback: 'Pyvideo'
+    extractor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.extract_mmaction
+      stage: 'head'  # 'backbone', 'neck', or 'head'
+    preprocessor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+      clip_len: 8
+      frame_interval: 8
+      resize_size: 256
+      crop_type: 'center_crop'
+      crop_size: 256
+    cfg:
+      _target_: repralign.models.loading.mmaction_loader
+      path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/slowonly/slowonly_imagenet-pretrained-r50_8xb16-8x8x1-steplr-150e_kinetics400-rgb.py
+      path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/slow/slowonly_imagenet-pretrained-r50_8xb16-8x8x1-steplr-150e_kinetics400-rgb_20220901-df42dc84.pth
+    rsa_skips: ['backbone_maxpool', 'cls_head_avg_pool', 'cls_head_dropout']
+
+  - name: 'video_swin_small'
+    type: 'Kinetics-400 (1)'
+    archtype: 'Transformers'
+    params: 49.8
+    flops: 166
+    accuracy: 80.54
+    time_as: "input_dim_localglobal"
+    pre: 'preimage'
+    set: # leave None
+    netset_fallback: 'Pyvideo'
+    extractor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.extract_mmaction
+      stage: 'head'  # 'backbone', 'neck', or 'head'
+    preprocessor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+      clip_len: 32
+      frame_interval: 2
+      resize_size: 224
+      crop_type: 'center_crop'
+      crop_size: 224
+    cfg:
+      _target_: repralign.models.loading.mmaction_loader
+      path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/swin/swin-small-p244-w877_in1k-pre_8xb8-amp-32x2x1-30e_kinetics400-rgb.py
+      path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/swin/swin-small-p244-w877_in1k-pre_8xb8-amp-32x2x1-30e_kinetics400-rgb_20220930-e91ab986.pth
+    layers: ['backbone.layers.0', 'backbone.layers.1', 'backbone.layers.2.blocks.1', 'backbone.layers.2.blocks.3',
+             'backbone.layers.2.blocks.5', 'backbone.layers.2.blocks.7', 'backbone.layers.2.blocks.9',
+             'backbone.layers.2.blocks.11', 'backbone.layers.2.blocks.13', 'backbone.layers.2.blocks.15',
+             'backbone.layers.2.blocks.17', 'backbone.layers.3', 'cls_head.fc_cls']
+    rsa_skips: []
+
+  - name: 'uniformer_v2_B_16_CLIP_k400'
+    type: 'Kinetics-400 (1)'
+    archtype: 'Transformers'
+    params: 115
+    flops: 100
+    accuracy: 84.3
+    time_as: "input_dim_localglobal"
+    pre: 'preimage'
+    set: # leave None
+    netset_fallback: 'Pyvideo'
+    extractor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.extract_mmaction
+      stage: 'head'  # 'backbone', 'neck', or 'head'
+    preprocessor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+      clip_len: 8
+      frame_interval: 12
+      resize_size: 224
+      crop_type: 'center_crop'
+      crop_size: 224
+    cfg:
+      _target_: repralign.models.loading.mmaction_loader
+      path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/uniformerv2/uniformerv2-base-p16-res224_clip_8xb32-u8_kinetics400-rgb.py
+      path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/uniformerv2/uniformerv2-base-p16-res224_clip_8xb32-u8_kinetics400-rgb_20230313-e29fc968.pth
+    rsa_skips: ['backbone_ln_pre']
+
+  - name: 'slow_r50_in1k_k710'
+    type: 'Kinetics-710'
+    params: 32.45
+    flops: 54.75
+    accuracy: 72.39
+    time_as: "input_dim_local"
+    set: # leave None
+    netset_fallback: 'Pyvideo'
+    extractor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.extract_mmaction
+      stage: 'head'  # 'backbone', 'neck', or 'head'
+    preprocessor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+      clip_len: 8
+      frame_interval: 8
+      resize_size: 256
+      crop_type: 'center_crop'
+      crop_size: 256
+    cfg:
+      _target_: repralign.models.loading.mmaction_loader
+      path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/slowonly/slowonly_imagenet-pretrained-r50_32xb8-8x8x1-steplr-150e_kinetics710-rgb.py
+      path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/slow/slowonly_imagenet-pretrained-r50_32xb8-8x8x1-steplr-150e_kinetics710-rgb_20230612-12ce977c.pth
+    rsa_skips: ['backbone_maxpool', 'cls_head_avg_pool', 'cls_head_dropout']
+
+  - name: 'video_swin_small_k710'
+    type: 'Kinetics-710'
+    params: 49.8
+    flops: 166
+    accuracy: 76.9
+    time_as: "input_dim_localglobal"
+    set: # leave None
+    netset_fallback: 'Pyvideo'
+    extractor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.extract_mmaction
+      stage: 'head'  # 'backbone', 'neck', or 'head'
+    preprocessor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+      clip_len: 32
+      frame_interval: 2
+      resize_size: 224
+      crop_type: 'center_crop'
+      crop_size: 224
+    cfg:
+      _target_: repralign.models.loading.mmaction_loader
+      path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/swin/swin-small-p244-w877_in1k-pre_32xb4-amp-32x2x1-30e_kinetics710-rgb.py
+      path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/swin/swin-small-p244-w877_in1k-pre_32xb4-amp-32x2x1-30e_kinetics710-rgb_20230612-8e082ff1.pth
+    layers: ['backbone.layers.0', 'backbone.layers.1', 'backbone.layers.2.blocks.1', 'backbone.layers.2.blocks.3',
+             'backbone.layers.2.blocks.5', 'backbone.layers.2.blocks.7', 'backbone.layers.2.blocks.9',
+             'backbone.layers.2.blocks.11', 'backbone.layers.2.blocks.13', 'backbone.layers.2.blocks.15',
+             'backbone.layers.2.blocks.17', 'backbone.layers.3', 'cls_head.fc_cls']
+    rsa_skips: []
+
+  - name: 'uniformer_v2_B_16_CLIP_k710'
+    type: 'Kinetics-710'
+    params: 115
+    flops: 100
+    accuracy: 78.9
+    time_as: "input_dim_localglobal"
+    set: # leave None
+    netset_fallback: 'Pyvideo'
+    extractor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.extract_mmaction
+      stage: 'head'  # 'backbone', 'neck', or 'head'
+    preprocessor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+      clip_len: 8
+      frame_interval: 12
+      resize_size: 224
+      crop_type: 'center_crop'
+      crop_size: 224
+    cfg:
+      _target_: repralign.models.loading.mmaction_loader
+      path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/uniformerv2/uniformerv2-base-p16-res224_clip-pre_u8_kinetics710-rgb.py
+      path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/uniformerv2/uniformerv2-base-p16-res224_clip-pre_u8_kinetics710-rgb_20230612-63cdbad9.pth
+    rsa_skips: ['backbone_transformer_dec_0', 'backbone_transformer_dec_1', 'backbone_transformer_dec_2', 'backbone_transformer_dec_3',
+                'backbone_transformer_dpe_0', 'backbone_transformer_dpe_1', 'backbone_transformer_dpe_2', 'backbone_transformer_dpe_3',
+                'backbone_transformer_norm', 'backbone_ln_pre']
+
+  - name: 'MViT_v2_S'
+    type: 'Kinetics-400 (2)'
+    archtype: 'Transformers'
+    params: 34.5
+    flops: 64
+    accuracy: 81.1
+    time_as: "input_dim_global"
+    pre: 'nopre'
+    set: # leave None
+    netset_fallback: 'Pyvideo'
+    extractor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.extract_mmaction
+      stage: 'head'  # 'backbone', 'neck', or 'head'
+    preprocessor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+      clip_len: 16
+      frame_interval: 4
+      resize_size: 224
+      crop_type: 'center_crop'
+      crop_size: 224
+    cfg:
+      _target_: repralign.models.loading.mmaction_loader
+      path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/mvit/mvit-small-p244_32xb16-16x4x1-200e_kinetics400-rgb.py
+      path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/mvit/mvit-small-p244_16x4x1_kinetics400-rgb_20221021-9ebaaeed.pth
+    rsa_skips: ['backbone_patch_embed_projection', 'backbone_norm3',  'cls_head_dropout']
+
+  - name: 'MViT_v2_B'
+    type: 'Kinetics-400 (2)'
+    archtype: 'Transformers'
+    params: 51.2
+    flops: 225
+    accuracy: 82.6
+    time_as: "input_dim_global"
+    pre: 'nopre'
+    set: # leave None
+    netset_fallback: 'Pyvideo'
+    extractor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.extract_mmaction
+      stage: 'head'  # 'backbone', 'neck', or 'head'
+    preprocessor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+      clip_len: 32
+      frame_interval: 3
+      resize_size: 224
+      crop_type: 'center_crop'
+      crop_size: 224
+    cfg:
+      _target_: repralign.models.loading.mmaction_loader
+      path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/mvit/mvit-base-p244_32x3x1_kinetics400-rgb.py
+      path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/mvit/mvit-base-p244_32x3x1_kinetics400-rgb_20221021-f392cd2d.pth
+    rsa_skips: ['backbone_patch_embed_projection', 'backbone_norm3',  'cls_head_dropout']
+
+  - name: 'TSN_r50_8'
+    type: 'Kinetics-400 (2)'
+    archtype: 'CNNs'
+    params: 24.33
+    flops: 102.7
+    accuracy: 74.12
+    time_as: 'score_avg'
+    set: # leave None
+    netset_fallback: 'Pyvideo'
+    extractor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.extract_mmaction
+      stage: 'head'  # 'backbone', 'neck', or 'head'
+    preprocessor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+      clip_len: 1
+      frame_interval: 1
+      resize_size: 256
+      crop_type: 'center_crop'
+      crop_size: 224
+      format_shape: 'NCHW'
+    cfg:
+      _target_: repralign.models.loading.mmaction_loader
+      path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/tsn/tsn_imagenet-pretrained-r50_8xb32-1x1x8-100e_kinetics400-rgb.py
+      path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/tsn/tsn_imagenet-pretrained-r50_8xb32-1x1x8-100e_kinetics400-rgb_20220906-2692d16c.pth
+    rsa_skips: ['backbone_maxpool', 'cls_head_avg_pool', 'cls_head_consensus', 'cls_head_dropout']
+
+  - name: 'tsm_r50'
+    type: 'Kinetics-400 (2)'
+    archtype: 'CNNs'
+    params: 23.87
+    flops: 32.88
+    accuracy: 73.18
+    time_as: "input_dim_local"
+    pre: 'preimage'
+    set: # leave None
+    netset_fallback: 'Pyvideo'
+    extractor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.extract_mmaction
+      stage: 'head'  # 'backbone', 'neck', or 'head'
+    preprocessor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+      clip_len: 1
+      frame_interval: 1
+      resize_size: 256
+      crop_type: 'center_crop'
+      crop_size: 224
+      format_shape: 'NCHW'
+    cfg:
+      _target_: repralign.models.loading.mmaction_loader
+      path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/tsm/tsm_imagenet-pretrained-r50_8xb16-1x1x8-50e_kinetics400-rgb.py
+      path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/tsm/tsm_imagenet-pretrained-r50_8xb16-1x1x8-50e_kinetics400-rgb_20220831-64d69186.pth
+    rsa_skips: ['backbone_maxpool', 'cls_head_avg_pool', 'cls_head_consensus', 'cls_head_dropout']
+
+  - name: 'MViT_v2_S_ssv2'
+    type: 'Sth-Sth-v2'
+    params: 34.5
+    flops: 64
+    accuracy: 68.1
+    time_as: "input_dim_global"
+    set: # leave None
+    netset_fallback: 'Pyvideo'
+    extractor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.extract_mmaction
+      stage: 'head'  # 'backbone', 'neck', or 'head'
+    preprocessor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+      clip_len: 16
+      frame_interval: 6
+      resize_size: 224
+      crop_type: 'center_crop'
+      crop_size: 224
+    cfg:
+      _target_: repralign.models.loading.mmaction_loader
+      path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/mvit/mvit-small-p244_k400-pre_16xb16-u16-100e_sthv2-rgb.py
+      path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/mvit/mvit-small-p244_u16_sthv2-rgb_20221021-65ecae7d.pth
+    rsa_skips: ['backbone_patch_embed_projection', 'backbone_norm3', 'cls_head_dropout']
+
+  - name: 'MViT_v2_B_ssv2'
+    type: 'Sth-Sth-v2'
+    params: 51.2
+    flops: 225
+    accuracy: 70.8
+    time_as: "input_dim_global"
+    set: # leave None
+    netset_fallback: 'Pyvideo'
+    extractor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.extract_mmaction
+      stage: 'head'  # 'backbone', 'neck', or 'head'
+    preprocessor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+      clip_len: 32
+      frame_interval: 3
+      resize_size: 224
+      crop_type: 'center_crop'
+      crop_size: 224
+    cfg:
+      _target_: repralign.models.loading.mmaction_loader
+      path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/mvit/mvit-base-p244_u32_sthv2-rgb.py
+      path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/mvit/mvit-base-p244_u32_sthv2-rgb_20221021-d5de5da6.pth
+    rsa_skips: ['backbone_patch_embed_projection', 'backbone_norm3', 'cls_head_dropout']
+
+  - name: 'tsm_r50_ssv2'
+    type: 'Sth-Sth-v2'
+    params: 23.87
+    flops: 32.88
+    accuracy: 62.72
+    time_as: "input_dim_local"
+    set: # leave None
+    netset_fallback: 'Pyvideo'
+    extractor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.extract_mmaction
+      stage: 'head'  # 'backbone', 'neck', or 'head'
+    preprocessor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+      clip_len: 1
+      frame_interval: 1
+      resize_size: 256
+      crop_type: 'center_crop'
+      crop_size: 256
+      format_shape: 'NCHW'
+    cfg:
+      _target_: repralign.models.loading.mmaction_loader
+      path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/tsm/tsm_imagenet-pretrained-r50_8xb16-1x1x8-50e_sthv2-rgb.py
+      path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/tsm/tsm_imagenet-pretrained-r50_8xb16-1x1x8-50e_sthv2-rgb_20230317-be0fc26e.pth
+    rsa_skips: ['backbone_maxpool', 'cls_head_avg_pool', 'cls_head_consensus', 'cls_head_dropout']
+
+  - name: 'TSN_r50_8_ssv2'
+    type: 'Sth-Sth-v2'
+    params: 24.33
+    flops: 102.7
+    accuracy: 35.5
+    time_as: 'score_avg'
+    set: # leave None
+    netset_fallback: 'Pyvideo'
+    extractor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.extract_mmaction
+      stage: 'head'  # 'backbone', 'neck', or 'head'
+    preprocessor:
+      _partial_: True
+      _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+      clip_len: 1
+      frame_interval: 1
+      resize_size: 256
+      crop_type: 'center_crop'
+      crop_size: 224
+      format_shape: 'NCHW'
+    cfg:
+      _target_: repralign.models.loading.mmaction_loader
+      path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/tsn/tsn_imagenet-pretrained-r50_8xb32-1x1x8-50e_sthv2-rgb.py
+      path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/tsn/tsn_imagenet-pretrained-r50_8xb32-1x1x8-50e_sthv2-rgb_20230313-06ad7d03.pth
+    rsa_skips: ['backbone_maxpool', 'cls_head_avg_pool', 'cls_head_consensus', 'cls_head_dropout']

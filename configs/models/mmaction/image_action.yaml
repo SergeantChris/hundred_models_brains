@@ -1,0 +1,297 @@
+- name: 'c2d_r50_nopool_mma'
+  type: 'image-k400'
+  params: 24.3
+  flops: 33
+  accuracy: 73.44
+  time_as: 'score_avg'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 8
+    frame_interval: 8
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+    format_shape: 'NCHW'
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/c2d/c2d_r50-in1k-pre-nopool_8xb32-8x8x1-100e_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/c2d/c2d_r50-in1k-pre-nopool_8xb32-8x8x1-100e_kinetics400-rgb_20221027-e0227b22.pth
+  layers: [ 'backbone.conv1', 'backbone.layer1', 'backbone.layer2', 'backbone.layer3', 'backbone.layer4', 'cls_head' ]
+  rsa_skips: ['cls_head']
+
+- name: 'c2d_r101_nopool_mma'
+  type: 'image-k400'
+  params: 43.3
+  flops: 63
+  accuracy: 74.97
+  time_as: 'score_avg'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 8
+    frame_interval: 8
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+    format_shape: 'NCHW'
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/c2d/c2d_r101-in1k-pre-nopool_8xb32-8x8x1-100e_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/c2d/c2d_r101-in1k-pre-nopool_8xb32-8x8x1-100e_kinetics400-rgb_20221027-557bd8bc.pth
+  rsa_skips: ['backbone_maxpool', 'cls_head_avg_pool', 'cls_head_consensus', 'cls_head_dropout', 'cls_head_fc_cls']
+
+- name: 'c2d_r50_pool8_mma'
+  type: 'image-k400'
+  params: 24.3
+  flops: 19
+  accuracy: 73.89
+  time_as: 'image_agg'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 8
+    frame_interval: 8
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+    format_shape: 'NCTHW'
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/c2d/c2d_r50-in1k-pre_8xb32-8x8x1-100e_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/c2d/c2d_r50-in1k-pre_8xb32-8x8x1-100e_kinetics400-rgb_20221027-3ca304fa.pth
+  rsa_skips: ['backbone_maxpool3d_1', 'backbone_maxpool3d_2', 'cls_head_avg_pool', 'cls_head_dropout', 'cls_head_fc_cls']
+
+- name: 'c2d_r50_pool16_mma'
+  type: 'image-k400'
+  params: 24.3
+  flops: 39
+  accuracy: 74.97
+  time_as: 'image_agg'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 16
+    frame_interval: 4
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+    format_shape: 'NCTHW'
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/c2d/c2d_r50-in1k-pre_8xb32-16x4x1-100e_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/c2d/c2d_r50-in1k-pre_8xb32-16x4x1-100e_kinetics400-rgb_20221027-5f382a43.pth
+  rsa_skips: ['backbone_maxpool3d_1', 'backbone_maxpool3d_2', 'cls_head_avg_pool', 'cls_head_dropout', 'cls_head_fc_cls']
+
+- name: 'TSN_r50_8'
+  type: 'image-k400'
+  params: 24.33
+  flops: 102.7
+  accuracy: 74.12
+  time_as: 'score_avg'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 1
+    frame_interval: 1
+    resize_size: 256
+    crop_type: 'center_crop'
+    crop_size: 224
+    format_shape: 'NCHW'
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/tsn/tsn_imagenet-pretrained-r50_8xb32-1x1x8-100e_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/tsn/tsn_imagenet-pretrained-r50_8xb32-1x1x8-100e_kinetics400-rgb_20220906-2692d16c.pth
+  rsa_skips: ['backbone_maxpool', 'cls_head_avg_pool', 'cls_head_consensus', 'cls_head_dropout', 'cls_head_fc_cls']
+
+- name: 'TSN_r101_8'
+  type: 'image-k400'
+  params: 43.32
+  flops: 195.8
+  accuracy: 75.89
+  time_as: 'score_avg'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 1
+    frame_interval: 1
+    resize_size: 256
+    crop_type: 'center_crop'
+    crop_size: 224
+    format_shape: 'NCHW'
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/tsn/tsn_imagenet-pretrained-r101_8xb32-1x1x8-100e_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/tsn/tsn_imagenet-pretrained-r101_8xb32-1x1x8-100e_kinetics400-rgb_20220906-23cff032.pth
+  rsa_skips: ['backbone_maxpool', 'cls_head_avg_pool', 'cls_head_consensus', 'cls_head_dropout', 'cls_head_fc_cls']
+
+- name: 'TSN_resnext101_3' # not running, incompatibility issue
+  type: 'image-k400'
+  params: 42.9
+  flops: 200.3
+  accuracy: 72.95
+  time_as: 'score_avg'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 1
+    frame_interval: 1
+    resize_size: 256
+    crop_type: 'center_crop'
+    crop_size: 224
+    format_shape: 'NCHW'
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/tsn/custom_backbones/tsn_imagenet-pretrained-rn101-32x4d_8xb32-1x1x3-100e_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/tsn/tsn_imagenet-pretrained-rn101-32x4d_8xb32-1x1x3-100e_kinetics400-rgb_20221209-de2d5615.pth
+
+- name: 'TSN_d161_3'
+  type: 'image-k400'
+  params: 27.36
+  flops: 194.6
+  accuracy: 72.07
+  time_as: 'score_avg'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 1
+    frame_interval: 1
+    resize_size: 256
+    crop_type: 'center_crop'
+    crop_size: 224
+    format_shape: 'NCHW'
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/tsn/custom_backbones/tsn_imagenet-pretrained-dense161_8xb32-1x1x3-100e_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/tsn/tsn_imagenet-pretrained-dense161_8xb32-1x1x3-100e_kinetics400-rgb_20220906-5f4c0daf.pth
+  rsa_skips: ['backbone_features_norm0', 'backbone_features_norm5', 'backbone_features_pool0',
+              'backbone_features_relu0', 'cls_head_avg_pool', 'cls_head_consensus', 'cls_head_dropout',
+              'cls_head_fc_cls']
+
+- name: 'TSN_mobones4_8'
+  type: 'image-k400'
+  params: 13.72
+  flops: 76
+  accuracy: 73.65
+  time_as: 'score_avg'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 1
+    frame_interval: 1
+    resize_size: 256
+    crop_type: 'center_crop'
+    crop_size: 224
+    format_shape: 'NCHW'
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/tsn/custom_backbones/tsn_imagenet-pretrained-mobileone-s4_8xb32-1x1x8-100e_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/tsn/tsn_imagenet-pretrained-mobileone-s4_8xb32-1x1x8-100e_kinetics400-rgb_20230825-2da3c1f7.pth
+  rsa_skips: ['cls_head_avg_pool', 'cls_head_consensus', 'cls_head_dropout', 'cls_head_fc_cls']
+
+- name: 'TSN_swin_8'
+  type: 'image-k400'
+  params: 87.15
+  flops: 386.7
+  accuracy: 79.22
+  time_as: 'score_avg'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 1
+    frame_interval: 1
+    resize_size: 256
+    crop_type: 'center_crop'
+    crop_size: 224
+    format_shape: 'NCHW'
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/tsn/custom_backbones/tsn_imagenet-pretrained-swin-transformer_32xb8-1x1x8-50e_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/tsn/tsn_imagenet-pretrained-swin-transformer_32xb8-1x1x8-50e_kinetics400-rgb_20230530-428f0064.pth
+  rsa_skips: ['backbone_patch_embed_proj', 'backbone_patch_embed_norm', 'backbone_avgpool', 'backbone_norm', 'backbone_pos_drop', 'cls_head_avg_pool', 'cls_head_consensus', 'cls_head_dropout', 'cls_head_fc_cls']
+
+- name: 'timesformer_spaceOnly'
+  type: 'image-k400'
+  params: 86.11
+  flops: 141
+  accuracy: 76.93
+  time_as: 'score_avg'
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 8
+    frame_interval: 32
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/timesformer/timesformer_spaceOnly_8xb8-8x32x1-15e_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/timesformer/timesformer_spaceOnly_8xb8-8x32x1-15e_kinetics400-rgb_20220815-78f05367.pth
+  rsa_skips: ['backbone_patch_embed_projection', 'backbone_drop_after_pos', 'backbone_norm', 'cls_head_fc_cls']

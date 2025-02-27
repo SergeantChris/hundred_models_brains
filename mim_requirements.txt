@@ -1,0 +1,6 @@
+mmcls==0.25.0
+mmengine==0.10.4
+mmcv==2.1.0
+mmcv-full==1.7.2
+mmpretrain==1.2.0
+mmaction2==1.2.0

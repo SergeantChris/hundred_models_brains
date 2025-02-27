@@ -1,0 +1,83 @@
+- name: 'slow_r50_in1k_k710'
+  type: 'video-k710'
+  params: 32.45
+  flops: 54.75
+  accuracy: 72.39
+  time_as: "input_dim_local"
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 8
+    frame_interval: 8
+    resize_size: 256
+    crop_type: 'center_crop'
+    crop_size: 256
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/slowonly/slowonly_imagenet-pretrained-r50_32xb8-8x8x1-steplr-150e_kinetics710-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/slow/slowonly_imagenet-pretrained-r50_32xb8-8x8x1-steplr-150e_kinetics710-rgb_20230612-12ce977c.pth
+  rsa_skips: ['backbone_maxpool', 'cls_head_avg_pool', 'cls_head_dropout', 'cls_head_fc_cls']
+
+- name: 'video_swin_small_k710'
+  type: 'video-k710'
+  params: 49.8
+  flops: 166
+  accuracy: 76.9
+  time_as: "input_dim_localglobal"
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 32
+    frame_interval: 2
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/swin/swin-small-p244-w877_in1k-pre_32xb4-amp-32x2x1-30e_kinetics710-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/swin/swin-small-p244-w877_in1k-pre_32xb4-amp-32x2x1-30e_kinetics710-rgb_20230612-8e082ff1.pth
+  layers: ['backbone.layers.0', 'backbone.layers.1', 'backbone.layers.2.blocks.1', 'backbone.layers.2.blocks.3',
+           'backbone.layers.2.blocks.5', 'backbone.layers.2.blocks.7', 'backbone.layers.2.blocks.9',
+           'backbone.layers.2.blocks.11', 'backbone.layers.2.blocks.13', 'backbone.layers.2.blocks.15',
+           'backbone.layers.2.blocks.17', 'backbone.layers.3', 'cls_head.fc_cls']
+  rsa_skips: ['cls_head_fc_cls']
+
+- name: 'uniformer_v2_B_16_CLIP_k710'
+  type: 'video-k710'
+  params: 115
+  flops: 100
+  accuracy: 78.9
+  time_as: "input_dim_localglobal"
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'head'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 8
+    frame_interval: 12
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/uniformerv2/uniformerv2-base-p16-res224_clip-pre_u8_kinetics710-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/mmaction2/checkpoints/uniformerv2/uniformerv2-base-p16-res224_clip-pre_u8_kinetics710-rgb_20230612-63cdbad9.pth
+  rsa_skips: ['backbone_transformer_dec_0', 'backbone_transformer_dec_1', 'backbone_transformer_dec_2', 'backbone_transformer_dec_3',
+              'backbone_transformer_dpe_0', 'backbone_transformer_dpe_1', 'backbone_transformer_dpe_2', 'backbone_transformer_dpe_3',
+              'backbone_transformer_norm', 'backbone_ln_pre', 'cls_head']

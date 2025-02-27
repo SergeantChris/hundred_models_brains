@@ -1,0 +1,57 @@
+- name: 'video_swin_small_text_contrastive'
+  type: 'video-k400-cl'
+  params: 49.8
+  flops: 166
+  time_as: "input_dim_localglobal"
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'backbone'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 32
+    frame_interval: 2
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/swin/swin-small-p244-w877_in1k-pre_8xb8-amp-32x2x1-30e_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/VideoSwin-Tim/renamed_oh1xhgwj-tVision-tText-Concat-VideoOnly.pt
+  layers: ['backbone.layers.0', 'backbone.layers.1', 'backbone.layers.2.blocks.1', 'backbone.layers.2.blocks.3',
+           'backbone.layers.2.blocks.5', 'backbone.layers.2.blocks.7', 'backbone.layers.2.blocks.9',
+           'backbone.layers.2.blocks.11', 'backbone.layers.2.blocks.13', 'backbone.layers.2.blocks.15',
+           'backbone.layers.2.blocks.17', 'backbone.layers.3', 'cls_head.fc_cls']
+  rsa_skips: ['cls_head_fc_cls']
+
+- name: 'video_swin_small_audio_text_contrastive'
+  type: 'video-k400-cl'
+  params: 49.8
+  flops: 166
+  time_as: "input_dim_localglobal"
+  set: # leave None
+  netset_fallback: 'Pyvideo'
+  extractor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.extract_mmaction
+    stage: 'backbone'  # 'backbone', 'neck', or 'head'
+  preprocessor:
+    _partial_: True
+    _target_: repralign.models.custom_extraction_functions.preprocess_mmaction
+    clip_len: 32
+    frame_interval: 2
+    resize_size: 224
+    crop_type: 'center_crop'
+    crop_size: 224
+  cfg:
+    _target_: repralign.models.loading.mmaction_loader
+    path_to_config: ${location}/workspace/code/mmaction2/configs/recognition/swin/swin-small-p244-w877_in1k-pre_8xb8-amp-32x2x1-30e_kinetics400-rgb.py
+    path_to_checkpoint: ${location}/workspace/code/VideoSwin-Tim/renamed_zuxjdalc-tVision-tAudio-tText-Concat-VideoOnly.pt
+  layers: ['backbone.layers.0', 'backbone.layers.1', 'backbone.layers.2.blocks.1', 'backbone.layers.2.blocks.3',
+           'backbone.layers.2.blocks.5', 'backbone.layers.2.blocks.7', 'backbone.layers.2.blocks.9',
+           'backbone.layers.2.blocks.11', 'backbone.layers.2.blocks.13', 'backbone.layers.2.blocks.15',
+           'backbone.layers.2.blocks.17', 'backbone.layers.3', 'cls_head.fc_cls']
+  rsa_skips: ['cls_head_fc_cls']

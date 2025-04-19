@@ -32,11 +32,11 @@ CNNs and Transformers are mostly equivalent in maximum score, but display intere
 
 There is a distinct effect of training biases on alignment to functionally selective regions
 
-# 👉 We rank the models in terms of brain alignment:
+## 👉 We rank the models in terms of brain alignment:
 
 ![Rank](./rank.png)
 
-# 👉 And we relate their brain alignment to their computational complexity:
+## 👉 And we relate their brain alignment to their computational complexity:
 
 ![Flops](./flops.png)
 

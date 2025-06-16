@@ -1,7 +1,7 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-# One Hundred Neural Networks and Brains Watching Videos: Lessons from Alignment
-Official paper code
+# One Hundred Neural Networks and Brains Watching Videos: Lessons from Alignment (ICLR 2025)
+Official paper code, read paper at https://openreview.net/pdf?id=LM4PYXBId5
 
 ## Setup Instructions
 1. Create a folder named `workspace` somewhere in your system, with subfolders `code` and `data`.
@@ -84,3 +84,16 @@ Official paper code
    choose to visualize the results grouped by model type (image-object, image-action, or video-action) by keeping 
    the `comparison_variable` as `"ModelType"`, or by architecture type by changing it to `"ArchType"`, and running 
    the script again.
+
+## How to cite
+Please cite this work when using the code or adapting it:
+```
+@inproceedings{
+  sartzetaki2025one,
+  title={One Hundred Neural Networks and Brains Watching Videos: Lessons from Alignment},
+  author={Christina Sartzetaki and Gemma Roig and Cees G. M. Snoek and Iris Groen},
+  booktitle={The Thirteenth International Conference on Learning Representations},
+  year={2025},
+  url={https://openreview.net/forum?id=LM4PYXBId5}
+}
+```

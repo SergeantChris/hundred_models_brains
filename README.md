@@ -9,7 +9,7 @@ Official paper code, read paper at https://openreview.net/pdf?id=LM4PYXBId5
 3. Set up the environment
    1. Create a new conda environment and activate it: 
       ```bash
-      conda create -n repralign python=3.9 pip=23.3
+      conda create -n repralign python=3.9
       conda activate repralign
       ```
    2. Run `pip install git+https://github.com/cvai-roig-lab/Net2Brain.git@evaluations_enhancements` to install the 

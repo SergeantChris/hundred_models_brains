@@ -6,3 +6,4 @@ openmim==0.3.9
 nibabel==5.2.1
 numpy==1.26.4
 pandas==1.4.0
+timm==0.9.16
